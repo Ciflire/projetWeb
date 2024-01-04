@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 
-app = Flask(__name__, static_folder='data')
+app = Flask(__name__, static_folder='static')
 
 DATABASE = 'data/database.sqlite3' # le nom du fichier de votre base sqlite3
 
@@ -25,6 +25,10 @@ def close_connection(exception):  # pour fermer la connexion proprement
 @app.route('/createchallenge')
 def createchallenge():
     return render_template('createchallenge.html')
+
+@app.route('/classements')
+def classements():
+    return render_template('tous_les_classements.html')
 
 
 @app.route('/generate_json_challenge', methods=['POST'])
