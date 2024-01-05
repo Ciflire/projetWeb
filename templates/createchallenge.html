@@ -1,27 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Création d'une épreuve</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Création d'une épreuve</h1>
     <form id="jsonForm" action="/generate_json_challenge" method="post">
-        <label for="name">Nom du l'épreuve:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="end_date">Date de fin :</label>
-        <input type="date" id="end_date" name="end_date" required>
+      <label for="name">Nom du l'épreuve:</label>
+      <input type="text" id="name" name="name" required />
 
-        <!-- Ajoutez d'autres champs selon vos besoins -->
+      <label for="end_date">Date de fin :</label>
+      <input type="date" id="end_date" name="end_date" required />
 
-        <button type="submit">Enregistrer l'épreuves</button>
+      <!-- Ajoutez d'autres champs selon vos besoins -->
+
+      <button type="submit">Enregistrer l'épreuves</button>
     </form>
 
     <div id="jsonResult"></div>
-
-    
-
-</body>
+  </body>
 </html>
