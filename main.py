@@ -134,6 +134,27 @@ def creationuser(name,admin, password, hash):
     return (message)
 
 
+@app.route("/api/users/change/<id_user>/<name>/<pwd>/<hash>")
+def updateusers(id_user,name,pwd,hash):
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        UPDATE users
+        SET name = (?),password = (?),hash = (?)
+        WHERE id_user = (?);
+
+    """,
+    (name,pwd,hash,id_user),
+    )
+
+    conn.commit()
+    conn.close()
+
+    message = "Les changements ont été enregistrés avec succès!"
+
+    return (message)
+
 @app.route("/api/users/<id_user>")
 def user_json(id_user):
     conn = sqlite3.connect(DATABASE)
