@@ -65,13 +65,93 @@ def creationchallenge(name,end_date):
 
     return (message)
 
+@app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
+def updatechallenge(id_challenge,name,end_date):
+    creation_date=datetime.now().timestamp()
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        UPDATE challenges
+        SET name = (?),end_date = (?)
+        WHERE id_challenge = (?);
+
+    """,
+    (name, end_date, id_challenge),
+    )
+
+    conn.commit()
+    conn.close()
+
+    message = "Les changements ont été enregistrés avec succès!"
+
+    return (message)
+
+@app.route("/api/challenge/delete/<id_challenge>")
+def deletechallenge(id_challenge):
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        DELETE FROM validations
+        WHERE id_challenge = (?);
+        """,
+         (id_challenge),
+    )
+    cur.execute(
+        """
+        DELETE FROM challenges
+        WHERE id_challenge = (?);
+        """,
+    (id_challenge),
+    )
+
+    conn.commit()
+    conn.close()
+
+    message = "Les changements ont été enregistrés avec succès!"
+
+    return (message)
+
+
+@app.route("/api/users/create/<name>/<admin>/<password>/<hash>")
+def creationuser(name,admin, password, hash):
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        INSERT INTO users (name, admin, password, hash)
+        VALUES (?,?,?,?)
+    """,
+    (name,admin, password, hash),
+    )
+
+    conn.commit()
+    conn.close()
+
+    message = "Les données ont été enregistrées avec succès!"
+
+    return (message)
+
 
 @app.route("/api/users/<id_user>")
 def user_json(id_user):
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(
-        f"""SELECT * FROM challenges where id_challenge = {id_user};"""
+        f"""SELECT * FROM users where id_challenge = {id_user};"""
+    )
+    info = cur.fetchall()
+    conn.close()
+    # print(info, file=sys.stderr)
+    return jsonify(info)
+
+@app.route("/api/users/all")
+def all_users():
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        f"""SELECT id_user,name FROM users;"""
     )
     info = cur.fetchall()
     conn.close()
