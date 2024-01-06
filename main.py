@@ -269,5 +269,18 @@ def validations_json(id_user, id_challenge):
     return jsonify(info)
 
 
+@app.route('/allusers')
+def index():
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = 'http://127.0.0.1:5000/api/users/all'
+    response = requests.get(api_url)
+
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        return render_template('allusers.html', data=data_json)
+    else:
+        return 'Erreur lors de la récupération des données de l\'API'
+
 if __name__ == "__main__":
     app.run(debug=True)
