@@ -48,12 +48,6 @@ def teardown_request(exception):
         g.db.close()
 
 
-class User:
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -128,9 +122,10 @@ def creationchallenge(name, end_date):
 
     return message
 
+
 @app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
-def updatechallenge(id_challenge,name,end_date):
-    creation_date=datetime.now().timestamp()
+def updatechallenge(id_challenge, name, end_date):
+    creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(
@@ -140,7 +135,7 @@ def updatechallenge(id_challenge,name,end_date):
         WHERE id_challenge = (?);
 
     """,
-    (name, end_date, id_challenge),
+        (name, end_date, id_challenge),
     )
 
     conn.commit()
@@ -148,7 +143,8 @@ def updatechallenge(id_challenge,name,end_date):
 
     message = "Les changements ont été enregistrés avec succès!"
 
-    return (message)
+    return message
+
 
 @app.route("/api/challenge/delete/<id_challenge>")
 def deletechallenge(id_challenge):
@@ -159,14 +155,14 @@ def deletechallenge(id_challenge):
         DELETE FROM validations
         WHERE id_challenge = (?);
         """,
-         (id_challenge),
+        (id_challenge),
     )
     cur.execute(
         """
         DELETE FROM challenges
         WHERE id_challenge = (?);
         """,
-    (id_challenge),
+        (id_challenge),
     )
 
     conn.commit()
@@ -174,11 +170,11 @@ def deletechallenge(id_challenge):
 
     message = "Les changements ont été enregistrés avec succès!"
 
-    return (message)
+    return message
 
 
 @app.route("/api/users/create/<name>/<admin>/<password>/<hash>")
-def creationuser(name,admin, password, hash):
+def creationuser(name, admin, password, hash):
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(
@@ -186,7 +182,7 @@ def creationuser(name,admin, password, hash):
         INSERT INTO users (name, admin, password, hash)
         VALUES (?,?,?,?)
     """,
-    (name,admin, password, hash),
+        (name, admin, password, hash),
     )
 
     conn.commit()
@@ -194,11 +190,11 @@ def creationuser(name,admin, password, hash):
 
     message = "Les données ont été enregistrées avec succès!"
 
-    return (message)
+    return message
 
 
 @app.route("/api/users/change/<id_user>/<name>/<pwd>/<hash>")
-def updateusers(id_user,name,pwd,hash):
+def updateusers(id_user, name, pwd, hash):
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
     cur.execute(
@@ -208,7 +204,7 @@ def updateusers(id_user,name,pwd,hash):
         WHERE id_user = (?);
 
     """,
-    (name,pwd,hash,id_user),
+        (name, pwd, hash, id_user),
     )
 
     conn.commit()
@@ -216,27 +212,25 @@ def updateusers(id_user,name,pwd,hash):
 
     message = "Les changements ont été enregistrés avec succès!"
 
-    return (message)
+    return message
+
 
 @app.route("/api/users/<id_user>")
 def user_json(id_user):
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(
-        f"""SELECT * FROM users where id_challenge = {id_user};"""
-    )
+    cur.execute(f"""SELECT * FROM users where id_challenge = {id_user};""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
 
+
 @app.route("/api/users/all")
 def all_users():
     conn = sqlite3.connect(DATABASE)
     cur = conn.cursor()
-    cur.execute(
-        f"""SELECT id_user,name FROM users;"""
-    )
+    cur.execute(f"""SELECT id_user,name FROM users;""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
@@ -269,18 +263,46 @@ def validations_json(id_user, id_challenge):
     return jsonify(info)
 
 
-@app.route('/allusers')
+@app.route("/allusers")
 def index():
     # Effectuer la requête API pour récupérer des données au format JSON
-    api_url = 'http://127.0.0.1:5000/api/users/all'
+    api_url = "http://127.0.0.1:5000/api/users/all"
     response = requests.get(api_url)
 
     # Vérifier si la requête a réussi (statut 200)
     if response.status_code == 200:
         data_json = response.json()
-        return render_template('allusers.html', data=data_json)
+        return render_template("allusers.html", data=data_json)
     else:
-        return 'Erreur lors de la récupération des données de l\'API'
+        return "Erreur lors de la récupération des données de l'API"
+
+
+@app.route("/api/users/delete/<id_user>")
+def deleteuser(id_user):
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        DELETE FROM users
+        WHERE id_user = (?);
+        """,
+        (id_user),
+    )
+    cur.execute(
+        """
+        DELETE FROM validations
+        WHERE id_user = (?);
+        """,
+        (id_user),
+    )
+
+    conn.commit()
+    conn.close()
+
+    message = "Les changements ont été enregistrés avec succès!"
+
+    return message
+
 
 if __name__ == "__main__":
     app.run(debug=True)
