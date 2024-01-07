@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>LeaderShip | Accueil</title>
+        <title>LeaderShip | Participants</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,11 +14,12 @@
         <div id="box">
             <div id="nav">
                 <ul>
-                    <li><a href="accueil.html">Accueil</a></li>
-                    <li >Mon profil</li>
-                    <li id="current">Participants</li>
-                    <li><a href="mychallenge.html">Mes épreuves</a></li>
-                    <li><a href="allchallenge.html">Épreuves</a></li>
+                  <a href="accueil.html"><li>Accueil</li></a>
+                  <a href="myprofil.html"><li>Mon profil</li></a>
+                  <a href="participants.html"><li id="current">Participants</li></a>
+                  <a href="mychallenge.html"><li>Mes épreuves</li></a>
+                  <a href="allchallenge.html"><li>Épreuves</li></a>
+                  <input type="button" onclick="confirm('Êtes-vous sûr ?')" value="Se déconnecter">
                 </ul>
             </div>
             <div id="content">
@@ -28,17 +29,20 @@
                       <th id="colum1">Participants</th>
                       <th>Épreuves réussies</th>
                       <th>Classement général</th>
+                      <th></th>
                     </tr>
                     <tr>
                       <td><a href="https://example.com">Peter</a></td>
                       <td>15</td>
                       <td>Terminée</td>
+                      <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     </a>
                     <tr>
                       <td>Lois</td>
                       <td>Griffin</td>
                       <td>En cours</td>
+                      <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     <tr>
                       <td>Joe</td>

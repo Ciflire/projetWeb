@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>LeaderShip | Accueil</title>
+        <title>LeaderShip | Nom de l'épreuve</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,7 @@
         <div id="box">
             <div id="nav">
                 <ul>
-                  <a href="accueil.html"><li id="current">Accueil</li></a>
+                  <a href="accueil.html"><li>Accueil</li></a>
                   <a href="myprofil.html"><li>Mon profil</li></a>
                   <a href="participants.html"><li>Participants</li></a>
                   <a href="mychallenge.html"><li>Mes épreuves</li></a>
@@ -23,23 +23,28 @@
                 </ul>
             </div>
             <div id="content">
-                <h2>Bienvenue !</h2>
-                <h3>Voici les dernières épreuves qui ont été ajoutées !</h3>
+                <h2>Nom de l'épreuve</h2>
+                <h3 id="describe">Description :</h3>
+                <h4>Praeter potest homines potest Romae et sine esse liberis quicquid esse homines liberis Romae quorundam nec aestimant qua praeter nascitur urbis credi Romae extra nec et obsequiorum et obsequiorum vero aestimant orbos nascitur et Romae praeter sine quicquid pomerium Romae Romae obsequiorum sine vero praeter caelibes aestimant urbis et vero vero sine inanes liberis coluntur liberis liberis sine aestimant homines coluntur quicquid nec inanes liberis Romae nec inanes Romae caelibes quorundam flatus orbos praeter urbis pomerium urbis liberis homines vero sine quicquid inanes extra praeter credi nascitur Romae homines nascitur vero caelibes flatus homines quorundam vero obsequiorum esse potest vile.</h4>
+                <form>
+                  <input type="text" id="token" name="token">
+                  <input type="button" id="join" value="Valider l'épreuve"> <!sinon afficher déjà inscrit>
+                </form> 
                 <table>
                     <tr>
-                      <th id="colum1">Nom de l'épreuve</th>
-                      <th>Nombre de participants</th>
+                      <th id="colum1">Nom du participant</th>
+                      <th>Position</th>
                       <th>Statut</th>
                       <th></th>
                     </tr>
                     <tr>
-                      <td>Peter</td>
+                      <td><a href="https://example.com">Peter</a></td>
                       <td>15</td>
                       <td>Terminée</td>
                       <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     </a>
-                    <tr>
+                    <tr id="currentuser"> <!indique l'emplacement de l'utilisateur actif>
                       <td>Lois</td>
                       <td>Griffin</td>
                       <td>En cours</td>
@@ -49,7 +54,6 @@
                       <td>Joe</td>
                       <td>Swanson</td>
                       <td>$300</td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     <tr>
                       <td>Cleveland</td>

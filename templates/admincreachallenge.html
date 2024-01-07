@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LeaderShip | Création d'une épreuve</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="accueil.css" />
+    </head>
+    <header>
+        <h1>LeaderShip</h1>
+    </header>
+    <body>
+        <div id="box">
+            <div id="nav">
+                <ul>
+                    <a href="accueil.html"><li>Accueil</li></a>
+                    <a href="myprofil.html"><li>Mon profil</li></a>
+                    <a href="participants.html"><li>Participants</li></a>
+                    <a href="mychallenge.html"><li>Mes épreuves</li></a>
+                    <a href="allchallenge.html"><li>Épreuves</li></a>
+                    <input type="button" onclick="confirm('Êtes-vous sûr ?')" value="Se déconnecter">
+                </ul>
+            </div>
+            <div id="content">
+                <h2>Création d'une épreuve</h2>
+                <form id="creaepreuve"><br>
+                  <label for="fname"><h3>Nom de l'épreuve</h3></label>
+                  <input type="text" id="namechallenge" name="fname">
+                  <label for="fname"><h3>Description</h3></label>
+                  <textarea id="description"></textarea>
+                  <label for="fname"><h3>Date de fin</h3></label>
+                  <input type="date" id="date" name="fname">
+                  <input type="submit" onclick="confirm('Êtes-vous sûr ?')" id="adduser" value="Appliquer"> <!redirection template ajout utilisateur>
+                  <input type="button" id="removeuser" value="Annuler"> <!redirection template ajout utilisateur>
+                </form> 
+            </div>
+        </div>
+    </body>
+    <footer>
+        <p>Copyright</p>
+    </footer>
+</html>

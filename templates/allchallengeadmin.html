@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>LeaderShip | Accueil</title>
+        <title>LeaderShip | Épreuves disponibles</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,17 +14,21 @@
         <div id="box">
             <div id="nav">
                 <ul>
-                  <a href="accueil.html"><li id="current">Accueil</li></a>
+                  <a href="accueil.html"><li>Accueil</li></a>
                   <a href="myprofil.html"><li>Mon profil</li></a>
                   <a href="participants.html"><li>Participants</li></a>
                   <a href="mychallenge.html"><li>Mes épreuves</li></a>
-                  <a href="allchallenge.html"><li>Épreuves</li></a>
+                  <a href="allchallenge.html"><li id="current">Épreuves</li></a>
                   <input type="button" onclick="confirm('Êtes-vous sûr ?')" value="Se déconnecter">
                 </ul>
             </div>
             <div id="content">
-                <h2>Bienvenue !</h2>
-                <h3>Voici les dernières épreuves qui ont été ajoutées !</h3>
+                <h2>Nom d'utilisateur !</h2>
+                <h3>Voici toutes les épreuves disponibles !</h3>
+                <form>
+                  <input type="button" id="adduser" value="Ajouter une épreuve"> <!redirection template ajout utilisateur>
+                  <input type="button" id="removeuser" value="Supprimer une épreuve"> <!redirection template ajout utilisateur>
+                </form> 
                 <table>
                     <tr>
                       <th id="colum1">Nom de l'épreuve</th>
@@ -43,13 +47,11 @@
                       <td>Lois</td>
                       <td>Griffin</td>
                       <td>En cours</td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     <tr>
                       <td>Joe</td>
                       <td>Swanson</td>
                       <td>$300</td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
                     </tr>
                     <tr>
                       <td>Cleveland</td>
