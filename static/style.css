@@ -1,18 +1,6 @@
-body {
-  font-family: "Manrope", sans-serif;
-  font-size: 1em;
-  background-color: #1f2039;
-}
-
 a {
   color: #242424;
   text-decoration: none;
-}
-
-header,
-footer {
-  background-color: white;
-  margin: 30px;
 }
 
 .cta {
@@ -81,4 +69,126 @@ td {
   padding-right: 15px;
   align-items: center;
   justify-content: center;
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245, 250, 255);
+}
+
+header {
+  text-align: center;
+  min-height: 50px;
+}
+
+footer > p {
+  box-sizing: border-box;
+  padding: 20px;
+  margin: 0;
+  height: 60px;
+  background-color: rgba(24, 23, 23, 0.966);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0;
+  height: 60px;
+  background-color: rgba(24, 23, 23, 0.966);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  flex: 1;
+}
+
+#box {
+  border-radius: 25px;
+  background-image: linear-gradient(
+    to right,
+    rgba(34, 34, 34, 0.975),
+    rgb(37, 37, 37)
+  );
+  padding-top: 100px;
+  padding-bottom: 100px;
+  padding-left: 120px;
+  padding-right: 120px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
+  font-size: x-large;
+}
+
+input[type="text"],
+select {
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 5px;
+  width: 250px;
+  height: 30px;
+  font-size: large;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  background-color: rgb(249, 249, 249);
+  border-radius: 5px;
+  border: none;
+}
+
+input[type="password"],
+select {
+  box-sizing: border-box;
+  width: 250px;
+  padding: 5px;
+  margin-top: 10px;
+  height: 30px;
+  font-size: large;
+  background-color: rgb(249, 249, 249);
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  border: none;
+  resize: none;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #c53636;
+  color: white;
+  padding: 14px 20px;
+  resize: none;
+  margin: 8px 0;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: x-large;
+  box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.696);
+}
+
+input[type="text"]:focus {
+  background-color: rgb(240, 240, 240);
+  outline: none;
+}
+
+input[type="password"]:focus {
+  background-color: rgb(240, 240, 240);
+  outline: none;
+}
+
+input[type="submit"]:hover {
+  background-color: #af3030;
+}
+
+footer {
+  text-align: center;
+  min-height: 50px;
 }
