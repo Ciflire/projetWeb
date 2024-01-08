@@ -17,6 +17,14 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+Pour la database, il est fourni un fichier `schema.sql`, il vous est fourni ci-après un exemple d'une succession de commande à executer, à adapter à votre convenance. À savoir qu'il faut que votre databse se trouver dans le dossier static
+
+```sh
+cd static
+touch database.db
+sqlite3 database.db < ../schema.sql
+```
+
 Une fois l'installation terminée, lancez le script `run.sh` en pensant à le rendre executable au préalable
 
 ```sh

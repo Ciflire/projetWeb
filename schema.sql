@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS "users" (
         "id_user"       INTEGER NOT NULL UNIQUE,
         "name"  TEXT NOT NULL,
         "admin" INTEGER NOT NULL,
-        "password"      TEXT NOT NULL,
         "hash"  TEXT NOT NULL,
         "profile_picture"       INTEGER,
         PRIMARY KEY("id_user" AUTOINCREMENT)
