@@ -8,14 +8,12 @@ from flask import (
     Response,
     flash,
     session,
-    secrets,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import g
-from secrets import token_hex
 import sqlite3
 from datetime import datetime
-import json
+import secrets
 import sys
 import hashlib
 import requests
@@ -39,18 +37,36 @@ def get_db():  # cette fonction permet de créer une connexion à la base
 def connect_db():
     return sqlite3.connect(app.config["DATABASE"])
 
-def generateToken()->str:
+
+def generateToken() -> str:
     token = secrets.token_hex(16)
     return token
+
 
 @app.before_request
 def before_request():
     g.db = connect_db()
 
 
+@app.teardown_request
 def teardown_request(exception):
     if hasattr(g, "db"):
         g.db.close()
+
+
+@app.route("/")
+def home():
+    return render_template("accueil.html")
+
+
+@app.route("/user")
+def profile():
+    return render_template("profile.html")
+
+
+@app.route("/template")
+def template():
+    return render_template("template.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -94,7 +110,7 @@ def login():
                 "Login unsuccessful. Please check your username and password.""",
             )
 
-    return render_template("login.html")
+    return render_template("connexion.html")
 
 
 @app.route("/createchallenge")
