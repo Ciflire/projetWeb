@@ -1,230 +1,239 @@
-{% extends "template.html" %}
+{% extends "template.html" %} {% block body %}
+<div id="content">
+  <h2>nom d'utilisateur</h2>
+  <h3>prénom</h3>
+  <h3>nom</h3>
+  <h3>âge</h3>
+  <h3>nationalité</h3>
+  <h3>épreuves réussies</h3>
+  <h3 id="describe">Description :</h3>
+  <h4>
+    Praeter potest homines potest Romae et sine esse liberis quicquid esse
+    homines liberis Romae quorundam nec aestimant qua praeter nascitur urbis
+    credi Romae extra nec et obsequiorum et obsequiorum vero aestimant orbos
+    nascitur et Romae praeter sine quicquid pomerium Romae Romae obsequiorum
+    sine vero praeter caelibes aestimant urbis et vero vero sine inanes liberis
+    coluntur liberis liberis sine aestimant homines coluntur quicquid nec inanes
+    liberis Romae nec inanes Romae caelibes quorundam flatus orbos praeter urbis
+    pomerium urbis liberis homines vero sine quicquid inanes extra praeter credi
+    nascitur Romae homines nascitur vero caelibes flatus homines quorundam vero
+    obsequiorum esse potest vile.
+  </h4>
 
-{% block body %}
-           <div id="content">
-                <h2>nom d'utilisateur</h2>
-                <h3>prénom</h3>
-                <h3>nom</h3>
-                <h3>âge</h3>
-                <h3>nationalité</h3>
-                <h3>épreuves réussies</h3>
-                <h3 id="describe">Description :</h3>
-                <h4>Praeter potest homines potest Romae et sine esse liberis quicquid esse homines liberis Romae quorundam nec aestimant qua praeter nascitur urbis credi Romae extra nec et obsequiorum et obsequiorum vero aestimant orbos nascitur et Romae praeter sine quicquid pomerium Romae Romae obsequiorum sine vero praeter caelibes aestimant urbis et vero vero sine inanes liberis coluntur liberis liberis sine aestimant homines coluntur quicquid nec inanes liberis Romae nec inanes Romae caelibes quorundam flatus orbos praeter urbis pomerium urbis liberis homines vero sine quicquid inanes extra praeter credi nascitur Romae homines nascitur vero caelibes flatus homines quorundam vero obsequiorum esse potest vile.</h4>
-                <form>
-                <h3>Voici les épreuves auxquelles nom utilisateur participe !</h3>
-                <table>
-                    <tr>
-                      <th id="colum1">Nom de l'épreuve</th>
-                      <th>Nombre de participants</th>
-                      <th>Classement</th>
-                      <th>Statut</th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <td><a href="https://example.com">Peter</a></td>
-                      <td>15</td>
-                      <td>15</td>
-                      <td>Terminée</td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
-                    </tr>
-                    </a>
-                    <tr>
-                      <td>Lois</td>
-                      <td>Griffin</td>
-                      <td>15</td>
-                      <td>En cours</td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
-                    </tr>
-                    <tr>
-                      <td>Joe</td>
-                      <td>Swanson</td>
-                      <td>$300</td>
-                    </tr>
-                    <tr>
-                      <td>Cleveland</td>
-                      <td>Brown</td>
-                      <td>$250</td>
-                    </tr>
-                    <tr>
-                        <td>Cleveland</td>
-                        <td>Brown</td>
-                        <td>$250</td>
-                    </tr>
-                      <tr>
-                        <td>Peter</td>
-                        <td>15</td>
-                        <td>Terminée</td>
-                      </tr>
-                      <tr>
-                        <td>Lois</td>
-                        <td>Griffin</td>
-                        <td>En cours</td>
-                      </tr>
-                      <tr>
-                        <td>Joe</td>
-                        <td>Swanson</td>
-                        <td>$300</td>
-                      </tr>
-                      <tr>
-                        <td>Cleveland</td>
-                        <td>Brown</td>
-                        <td>$250</td>
-                      </tr>
-                      <tr>
-                          <td>Cleveland</td>
-                          <td>Brown</td>
-                          <td>$250</td>
-                      </tr>
-                      <tr>
-                        <td>Peter</td>
-                        <td>15</td>
-                        <td>Terminée</td>
-                      </tr>
-                      <tr>
-                        <td>Lois</td>
-                        <td>Griffin</td>
-                        <td>En cours</td>
-                      </tr>
-                      <tr>
-                        <td>Joe</td>
-                        <td>Swanson</td>
-                        <td>$300</td>
-                      </tr>
-                      <tr>
-                        <td>Cleveland</td>
-                        <td>Brown</td>
-                        <td>$250</td>
-                      </tr>
-                      <tr>
-                          <td>Cleveland</td>
-                          <td>Brown</td>
-                          <td>$250</td>
-                      </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>15</td>
-                          <td>Terminée</td>
-                        </tr>
-                        <tr>
-                          <td>Lois</td>
-                          <td>Griffin</td>
-                          <td>En cours</td>
-                        </tr>
-                        <tr>
-                          <td>Joe</td>
-                          <td>Swanson</td>
-                          <td>$300</td>
-                        </tr>
-                        <tr>
-                          <td>Cleveland</td>
-                          <td>Brown</td>
-                          <td>$250</td>
-                        </tr>
-                        <tr>
-                            <td>Cleveland</td>
-                            <td>Brown</td>
-                            <td>$250</td>
-                        </tr>
-                        <tr>
-                            <td>Peter</td>
-                            <td>15</td>
-                            <td>Terminée</td>
-                          </tr>
-                          <tr>
-                            <td>Lois</td>
-                            <td>Griffin</td>
-                            <td>En cours</td>
-                          </tr>
-                          <tr>
-                            <td>Joe</td>
-                            <td>Swanson</td>
-                            <td>$300</td>
-                          </tr>
-                          <tr>
-                            <td>Cleveland</td>
-                            <td>Brown</td>
-                            <td>$250</td>
-                          </tr>
-                          <tr>
-                              <td>Cleveland</td>
-                              <td>Brown</td>
-                              <td>$250</td>
-                          </tr>
-                            <tr>
-                              <td>Peter</td>
-                              <td>15</td>
-                              <td>Terminée</td>
-                            </tr>
-                            <tr>
-                              <td>Lois</td>
-                              <td>Griffin</td>
-                              <td>En cours</td>
-                            </tr>
-                            <tr>
-                              <td>Joe</td>
-                              <td>Swanson</td>
-                              <td>$300</td>
-                            </tr>
-                            <tr>
-                              <td>Cleveland</td>
-                              <td>Brown</td>
-                              <td>$250</td>
-                            </tr>
-                            <tr>
-                                <td>Cleveland</td>
-                                <td>Brown</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr>
-                              <td>Peter</td>
-                              <td>15</td>
-                              <td>Terminée</td>
-                            </tr>
-                            <tr>
-                              <td>Lois</td>
-                              <td>Griffin</td>
-                              <td>En cours</td>
-                            </tr>
-                            <tr>
-                              <td>Joe</td>
-                              <td>Swanson</td>
-                              <td>$300</td>
-                            </tr>
-                            <tr>
-                              <td>Cleveland</td>
-                              <td>Brown</td>
-                              <td>$250</td>
-                            </tr>
-                            <tr>
-                                <td>Cleveland</td>
-                                <td>Brown</td>
-                                <td>$250</td>
-                            </tr>
-                              <tr>
-                                <td>Peter</td>
-                                <td>15</td>
-                                <td>Terminée</td>
-                              </tr>
-                              <tr>
-                                <td>Lois</td>
-                                <td>Griffin</td>
-                                <td>En cours</td>
-                              </tr>
-                              <tr>
-                                <td>Joe</td>
-                                <td>Swanson</td>
-                                <td>$300</td>
-                              </tr>
-                              <tr>
-                                <td>Cleveland</td>
-                                <td>Brown</td>
-                                <td>$250</td>
-                              </tr>
-                              <tr>
-                                  <td>Cleveland</td>
-                                  <td>Brown</td>
-                                  <td>$250</td>
-                              </tr>
-                  </table>
-            </div>
-  {% endblock %}
+  <h3>Voici les épreuves auxquelles nom utilisateur participe !</h3>
+  <table>
+    <tr>
+      <th id="colum1">Nom de l'épreuve</th>
+      <th>Nombre de participants</th>
+      <th>Classement</th>
+      <th>Statut</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><a href="https://example.com">Peter</a></td>
+      <td>15</td>
+      <td>15</td>
+      <td>Terminée</td>
+      <td><input type="button" id="consult" value="Consulter" /></td>
+    </tr>
+
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>15</td>
+      <td>En cours</td>
+      <td><input type="button" id="consult" value="Consulter" /></td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>15</td>
+      <td>Terminée</td>
+    </tr>
+    <tr>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+    </tr>
+  </table>
+</div>
+{% endblock %}

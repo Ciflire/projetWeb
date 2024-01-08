@@ -1,80 +1,106 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>LeaderShip | nom de l'épreuve</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="accueil.css" />
-    </head>
-    <header>
-        <h1>LeaderShip</h1>
-    </header>
-    <body>
-        <div id="box">
-            <div id="nav">
-                <ul>
-                  <a href="accueil.html"><li>Accueil</li></a>
-                  <a href="myprofil.html"><li>Mon profil</li></a>
-                  <a href="participants.html"><li>Participants</li></a>
-                  <a href="mychallenge.html"><li>Mes épreuves</li></a>
-                  <a href="allchallenge.html"><li>Épreuves</li></a>
-                  <input type="button" onclick="confirm('Êtes-vous sûr ?')" value="Se déconnecter">
-                </ul>
-            </div>
-            <div id="content">
-                <h2>Nom de l'épreuve</h2>
-                <h3 id="describe">Description :</h3>
-                <h4>Praeter potest homines potest Romae et sine esse liberis quicquid esse homines liberis Romae quorundam nec aestimant qua praeter nascitur urbis credi Romae extra nec et obsequiorum et obsequiorum vero aestimant orbos nascitur et Romae praeter sine quicquid pomerium Romae Romae obsequiorum sine vero praeter caelibes aestimant urbis et vero vero sine inanes liberis coluntur liberis liberis sine aestimant homines coluntur quicquid nec inanes liberis Romae nec inanes Romae caelibes quorundam flatus orbos praeter urbis pomerium urbis liberis homines vero sine quicquid inanes extra praeter credi nascitur Romae homines nascitur vero caelibes flatus homines quorundam vero obsequiorum esse potest vile.</h4>
-                <form>
-                  <input type="button" onclick="confirm('Êtes-vous sûr ?')" id="join" value="Rejoindre l'épreuve"> <!sinon afficher déjà inscrit>
-                  <input type="button" id="adduser" value="Ajouter des utilisateurs"> <!redirection template ajout utilisateur>
-                  <input type="button" id="modify" value="Modifier l'épreuve"> <!redirection template ajout utilisateur>
-                </form> 
-                <table>
-                    <tr>
-                      <th id="colum1">Nom du participant</th>
-                      <th>Position</th>
-                      <th>Statut</th>
-                      <th>Tokens</th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <td><a href="https://example.com">Peter</a></td>
-                      <td>15</td>
-                      <td>Terminée</td>
-                      <td><button onclick="myFunction()">Copier</button></td>
-                      <td><input type="submit" id="removeuser" onclick="confirm('Êtes-vous sûr ?')" value="Supprimer"> <!redirection template ajout utilisateur></td>
-                      <td><input type="button" id="consult" value="Consulter"></td>
-                    </tr>
-                    </a>
-                    <tr id="currentuser"> <!indique l'emplacement de l'utilisateur actif>
-                      <td>Lois</td>
-                      <td>Griffin</td>
-                      <td>En cours</td>
-                      <td><button onclick="myFunction()">Copier</button></td>
-                      <td><input type="submit" id="removeuser" onclick="confirm('Êtes-vous sûr ?')" value="Supprimer"> <!redirection template ajout utilisateur></td>
-                    </tr>
-                    <tr>
-                      <td>Joe</td>
-                      <td>Swanson</td>
-                      <td>$300</td>
-                      <td><button onclick="myFunction()">Copier</button></td>
-                      <td><input type="submit" id="removeuser" onclick="confirm('Êtes-vous sûr ?')" value="Supprimer"> <!redirection template ajout utilisateur></td>
-                    </tr>
-                    <tr>
-                      <td>Cleveland</td>
-                      <td>Brown</td>
-                      <td>$250</td>
-                      <td><button onclick="myFunction()">Copier</button></td>
-                      <td><input type="submit" id="removeuser" onclick="confirm('Êtes-vous sûr ?')" value="Supprimer"> <!redirection template ajout utilisateur></td>
-                    </tr>
-                  </table>
-            </div>
-        </div>
-    </body>
-    <footer>
-        <p>Copyright</p>
-    </footer>
-</html>
+{% extends "template.html" %} {% block body %}
+
+<div id="content">
+  <h2>Nom de l'épreuve</h2>
+  <h3 id="describe">Description :</h3>
+  <h4>
+    Praeter potest homines potest Romae et sine esse liberis quicquid esse
+    homines liberis Romae quorundam nec aestimant qua praeter nascitur urbis
+    credi Romae extra nec et obsequiorum et obsequiorum vero aestimant orbos
+    nascitur et Romae praeter sine quicquid pomerium Romae Romae obsequiorum
+    sine vero praeter caelibes aestimant urbis et vero vero sine inanes liberis
+    coluntur liberis liberis sine aestimant homines coluntur quicquid nec inanes
+    liberis Romae nec inanes Romae caelibes quorundam flatus orbos praeter urbis
+    pomerium urbis liberis homines vero sine quicquid inanes extra praeter credi
+    nascitur Romae homines nascitur vero caelibes flatus homines quorundam vero
+    obsequiorum esse potest vile.
+  </h4>
+  <form>
+    <input
+      type="button"
+      onclick="confirm('Êtes-vous sûr ?')"
+      id="join"
+      value="Rejoindre l'épreuve"
+    />
+    <!sinon afficher déjà inscrit>
+    <input type="button" id="adduser" value="Ajouter des utilisateurs" />
+    <!redirection template ajout utilisateur>
+    <input type="button" id="modify" value="Modifier l'épreuve" />
+    <!redirection template ajout utilisateur>
+  </form>
+  <table>
+    <tr>
+      <th id="colum1">Nom du participant</th>
+      <th>Position</th>
+      <th>Statut</th>
+      <th>Tokens</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><a href="https://example.com">Peter</a></td>
+      <td>15</td>
+      <td>Terminée</td>
+      <td><button onclick="myFunction()">Copier</button></td>
+      <td>
+        <input
+          type="submit"
+          id="removeuser"
+          onclick="confirm('Êtes-vous sûr ?')"
+          value="Supprimer"
+        />
+        <!redirection template ajout utilisateur>
+      </td>
+      <td><input type="button" id="consult" value="Consulter" /></td>
+    </tr>
+
+    <tr id="currentuser">
+      <!indique l'emplacement de l'utilisateur actif>
+      <td>Lois</td>
+      <td>Griffin</td>
+      <td>En cours</td>
+      <td><button onclick="myFunction()">Copier</button></td>
+      <td>
+        <input
+          type="submit"
+          id="removeuser"
+          onclick="confirm('Êtes-vous sûr ?')"
+          value="Supprimer"
+        />
+        <!redirection template ajout utilisateur>
+      </td>
+    </tr>
+    <tr>
+      <td>Joe</td>
+      <td>Swanson</td>
+      <td>$300</td>
+      <td><button onclick="myFunction()">Copier</button></td>
+      <td>
+        <input
+          type="submit"
+          id="removeuser"
+          onclick="confirm('Êtes-vous sûr ?')"
+          value="Supprimer"
+        />
+        <!redirection template ajout utilisateur>
+      </td>
+    </tr>
+    <tr>
+      <td>Cleveland</td>
+      <td>Brown</td>
+      <td>$250</td>
+      <td><button onclick="myFunction()">Copier</button></td>
+      <td>
+        <input
+          type="submit"
+          id="removeuser"
+          onclick="confirm('Êtes-vous sûr ?')"
+          value="Supprimer"
+        />
+        <!redirection template ajout utilisateur>
+      </td>
+    </tr>
+  </table>
+</div>
+
+{% endblock %}
