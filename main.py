@@ -8,9 +8,11 @@ from flask import (
     Response,
     flash,
     session,
+    secrets,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import g
+from secrets import token_hex
 import sqlite3
 from datetime import datetime
 import json
@@ -37,6 +39,9 @@ def get_db():  # cette fonction permet de créer une connexion à la base
 def connect_db():
     return sqlite3.connect(app.config["DATABASE"])
 
+def generateToken()->str:
+    token = secrets.token_hex(16)
+    return token
 
 @app.before_request
 def before_request():
