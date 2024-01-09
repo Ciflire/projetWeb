@@ -6,14 +6,11 @@ from datetime import datetime
 import requests
 from flask import (
     Flask,
-    Response,
-    flash,
     g,
     jsonify,
     redirect,
     render_template,
     request,
-    session,
     url_for,
 )
 
@@ -349,7 +346,6 @@ def createchallenge():
 
 @app.route("/api/challenge/idLidt")
 def apiChallengeIdList():
-    creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -365,7 +361,6 @@ def apiChallengeIdList():
 
 @app.route("/api/challenge/all/order")
 def apiChallengeAllOder():
-    creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -427,7 +422,6 @@ def apichallengecreate():
 
 @app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
 def apiChallengeModify(id_challenge, name, end_date):
-    creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -561,7 +555,7 @@ def apiChallenge(id_challenge):
 def apiChallengeAll():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(f"""SELECT id_challenge,name FROM challenges;""")
+    cur.execute("""SELECT id_challenge,name FROM challenges;""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
@@ -593,7 +587,14 @@ def apiValidation(id_user, id_challenge):
         conn.commit()
         conn.close()
         return render_template("challengeadminadduser.html")
-    if request.method == "PUT":
+    return redirect(url_for("home"))
+
+
+@app.route("/api/correction/<id_user>/<id_challenge>", methods=["POST"])
+def apiCorrection(id_user, id_challenge):
+    conn = sqlite3.connect(app.config["DATABASE"])
+    cur = conn.cursor()
+    if request.method == "POST":
         if not current_user.is_authenticated:
             return render_template("login.html")
         answer = request.form["token"]
@@ -618,7 +619,7 @@ def apiValidation(id_user, id_challenge):
 def apiChallengeAccueil():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(f"""SELECT id_challenge,name FROM challenges LIMIT 10;""")
+    cur.execute("""SELECT id_challenge,name FROM challenges LIMIT 10;""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)

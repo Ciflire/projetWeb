@@ -3,8 +3,8 @@
   <h2>Entrer le token</h2>
   <form
     id="createpreuve"
-    method="put"
-    action="{{ url_for('apiValidation',id_user=id_user,id_challenge=id_challenge)}}"
+    method="post"
+    action="{{ url_for('apiCorrection',id_user=id_user,id_challenge=id_challenge)}}"
   >
     <br />
     <label for="token"><h3>Token</h3></label>
