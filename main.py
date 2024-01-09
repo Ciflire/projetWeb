@@ -161,21 +161,27 @@ def generateToken() -> str:
 def validation(id_challenge):
     if current_user.is_authenticated:
         id_user = current_user.user_id
-        return render_template("validation.html",id_challenge = id_challenge,id_user = id_user)
+        return render_template(
+            "validation.html", id_challenge=id_challenge, id_user=id_user
+        )
     else:
-        return redirect (url_for('login'))
+        return redirect(url_for("login"))
+
 
 # accueil
 @app.route("/")
 def home():
     # Effectuer la requête API pour récupérer des données au format JSON
-    api_url = "http://127.0.0.1:5000/api/challenge/accueil" # Pour récupérer les données des 10 épreuves les plus récentes
+    api_url = "http://127.0.0.1:5000/api/challenge/accueil"  # Pour récupérer les données des 10 épreuves les plus récentes
     response = requests.get(api_url)
-
     # Vérifier si la requête a réussi (statut 200)
     if response.status_code == 200:
         data_json = response.json()
-        return render_template("accueil.html", data=data_json)
+        print(data_json, file=sys.stderr)
+        return render_template(
+            "accueil.html", data=data_json, len=min(len(data_json), 10)
+        )
+
     else:
         return "Erreur lors de la récupération des données de l'API"
 
@@ -290,7 +296,6 @@ def challengeadduser():
 @app.route("/challenge/register")
 def challengeregister():
     return render_template("challengeregiste.html")
-
 
 
 @app.route("/user")
@@ -608,17 +613,17 @@ def apiValidation(id_user, id_challenge):
         return redirect(url_for("challenge", id_challenge=id_challenge))
     return redirect(url_for("home"))
 
+
 @app.route("/api/challenge/accueil")
 def apiChallengeAccueil():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(
-        f"""SELECT id_challenge,name FROM challenges LIMIT 10;"""
-    )
+    cur.execute(f"""SELECT id_challenge,name FROM challenges LIMIT 10;""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
+
 
 @app.route("/api/users/delete/<id_user>")
 def apiUserDelete(id_user):

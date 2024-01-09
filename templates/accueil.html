@@ -4,5 +4,20 @@
     Bienvenue ! {% if current_user.is_authenticated %} {{ current_user.name }}!
     {% endif %}
   </h2>
+  <h3>Voici les dernières épreuves qui ont été ajoutées</h3>
+  <table>
+    <tr>
+      <td>Id epreuve</td>
+      <td>Nom épreuve</td>
+    </tr>
+    {% for i in range(len) %}
+    <tr>
+      <td>{{data[i][0]}}</td>
+      <td>{{data[i][1]}}</td>
+      <td> <a href="{{url_for('challenge', id_challenge=data[i][0])}}"><button> Consulter </button>
+    </tr>
+    {%endfor%}
+  </table>
 
-{% endblock %}
+  {% endblock %}
+</div>
