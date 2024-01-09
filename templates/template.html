@@ -18,15 +18,15 @@
       <div id="nav">
         <ul>
           <a href="{{url_for('home')}}"><li>Accueil</li></a>
-          <a href=""><li>Mon profil</li></a>
-          <a href=""><li>Participants</li></a>
-          <a href=""><li>Mes épreuves</li></a>
-          <a href=""><li>Épreuves</li></a>
-          <input
-            type="button"
-            onclick="confirm('Êtes-vous sûr ?')"
-            value="Se déconnecter"
-          />
+          <a href="{{url_for('user')}}"><li>Mon profil</li></a>
+          <a href="{{url_for('usersall')}}"><li>Participants</li></a>
+          <a href="{{url_for('challengeuser')}}"><li>Mes épreuves</li></a>
+          <a href="{{url_for('challengeAll')}}"><li>Épreuves</li></a>
+            <input
+              type="button"
+              onclick="confirm('Êtes-vous sûr ?')"
+              value="Se déconnecter"
+            />
         </ul>
       </div>
       {% block body%}{% endblock%}

@@ -179,8 +179,17 @@ def challengemodify():
 
 
 @app.route("/challenge/all")
-def challengeall():
-    return render_template("allchallenge.html")
+def challengeAll():
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = "http://127.0.0.1:5000/api/challenges/all"
+    response = requests.get(api_url)
+
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        return render_template("allchallenge.html", data=data_json)
+    else:
+        return "Erreur lors de la récupération des données de l'API"
 
 
 @app.route("/challenge/all/admin")
@@ -190,7 +199,16 @@ def challengealladmin():
 
 @app.route("/users/all")
 def usersall():
-    return render_template("allusers.html")
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = "http://127.0.0.1:5000/api/users/all"
+    response = requests.get(api_url)
+
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        return render_template("allusers.html", data=data_json)
+    else:
+        return "Erreur lors de la récupération des données de l'API"
 
 
 @app.route("/challenge")
@@ -332,16 +350,16 @@ def apiChallengeDelete(id_challenge):
     return message
 
 
-@app.route("/api/users/create/<name>/<admin>/<password>/<hash>")
-def apiUserCreate(name, admin, password, hash):
+@app.route("/api/users/create/<name>/<admin>/<hash>")
+def apiUserCreate(name, admin, hash):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
-        INSERT INTO users (name, admin, password, hash)
-        VALUES (?,?,?,?)
+        INSERT INTO users (name, admin, hash)
+        VALUES (?,?,?)
     """,
-        (name, admin, password, hash),
+        (name, admin, hash),
     )
 
     conn.commit()
@@ -386,7 +404,7 @@ def apiUser(id_user):
 
 
 @app.route("/api/users/all")
-def apiUserAll():
+def apiUsersAll():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute("""SELECT id_user,name FROM users;""")
@@ -402,6 +420,19 @@ def apiChallenge(id_challenge):
     cur = conn.cursor()
     cur.execute(
         f"""SELECT * FROM challenges where id_challenge = {id_challenge};"""
+    )
+    info = cur.fetchall()
+    conn.close()
+    # print(info, file=sys.stderr)
+    return jsonify(info)
+
+
+@app.route("/api/challenges/all")
+def apiChallengeAll():
+    conn = sqlite3.connect(app.config["DATABASE"])
+    cur = conn.cursor()
+    cur.execute(
+        f"""SELECT id_challenge,name FROM challenges;"""
     )
     info = cur.fetchall()
     conn.close()

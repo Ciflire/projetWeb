@@ -1,3 +1,11 @@
-{% extends "template.html" %} {% block body %} {% for element in data %}
-<li>{{ element[1]}}</li>
-{% endfor %} {% endblock %}
+{% extends "template.html" %} {% block body %} 
+    <table>
+        {% for element in data %}
+        <tr>
+            <td>{{ element[1]}} </td>
+            <td>futur url du profil</td>
+        </tr>
+    <li></li>
+    {% endfor %} {% endblock %}
+    </table>
+    
