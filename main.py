@@ -362,9 +362,18 @@ def apiChallengeName(id_challenge):
     # print(info, file=sys.stderr)
     return jsonify(info)
 
-@app.route("/api/challenge/create/<name>/<end_date>")
-def apichallengecreate(name, end_date):
+@app.route("/api/challenge/create", methods=["POST"])
+def apichallengecreate():
     creation_date = datetime.now().timestamp()
+    print(request.form, file=sys.stderr)
+    name = request.form["namechallenge"]
+    end_date = request.form["date"]
+
+    # Convert the string to a datetime object
+    date_object = datetime.strptime(end_date, "%Y-%m-%d")
+
+    # Get the timestamp (seconds since the epoch)
+    end_date = date_object.timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
