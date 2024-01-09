@@ -195,6 +195,14 @@ def challengedelete():
 
 @app.route("/challenge/modify")
 def challengemodify():
+    if request.method == 'POST':
+                if request.form.get('action1') == "Appliquer":
+                    api_url = "http://127.0.0.1:5000/api/challenge/change/<id_challenge>/<name>/<end_date>"
+                    response = requests.post(api_url)
+                    if response.status_code == 200:
+                        return render_template("adminmodifchallenge.html")
+    elif request.form.get('action2') == "Annuler":
+        return redirect('/challenge/all')
     return render_template("adminmodifchallenge.html")
 
 
@@ -259,6 +267,44 @@ def challenge(id_challenge):
     api_url = "http://127.0.0.1:5000/api/challenge/" + str(id_challenge)
     response = requests.get(api_url)
 
+    
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        api_url = "http://127.0.0.1:5000/api/challenge/name/" + str(
+            id_challenge
+        )
+        response = requests.get(api_url)
+
+        # Vérifier si la requête a réussi (statut 200)
+        if response.status_code == 200:
+            name_json = response.json()
+            print(data_json, name_json, file=sys.stderr)
+            if request.method == 'POST':
+                if request.form.get('action1') == "Rejoindre l'épreuve":
+                    api_url = "http://127.0.0.1:5000/api/users/join/<id_user>/<id_challenge>"
+                    response = requests.post(api_url, data=User.get_id())
+            # Vérifier si la requête a réussi (statut 200)
+                    if response.status_code == 200:
+                        return render_template("challenge.html")
+                    else:
+                        return "Erreur lors de la récupération des données de l'API"
+    
+            return render_template(
+                "challenge.html", data=data_json, name=name_json
+            )
+        else:
+            return "Erreur lors de la récupération des données de l'API 2"
+    else:
+        return "Erreur lors de la récupération des données de l'API 1"
+
+
+@app.route("/challenge/admin")
+def challengeadmin(id_challenge):
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = "http://127.0.0.1:5000/api/challenge/" + str(id_challenge)
+    response = requests.get(api_url)
+
     # Vérifier si la requête a réussi (statut 200)
     if response.status_code == 200:
         data_json = response.json()
@@ -272,17 +318,12 @@ def challenge(id_challenge):
             name_json = response.json()
             print(data_json, name_json, file=sys.stderr)
             return render_template(
-                "challenge.html", data=data_json, name=name_json
+                "challengeadmin.html", data=data_json, name=name_json
             )
         else:
             return "Erreur lors de la récupération des données de l'API 2"
     else:
         return "Erreur lors de la récupération des données de l'API 1"
-
-
-@app.route("/challenge/admin")
-def challengeadmin():
-    return render_template("challengeadmin.html")
 
 
 @app.route("/challenge/add/user")
