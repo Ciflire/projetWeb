@@ -258,6 +258,7 @@ def challenge(id_challenge):
         # Vérifier si la requête a réussi (statut 200)
         if response.status_code == 200:
             name_json = response.json()
+            print(data_json, name_json, file=sys.stderr)
             return render_template(
                 "challenge.html", data=data_json, name=name_json
             )
@@ -533,13 +534,14 @@ def apiChallenge(id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
-        f"""SELECT id_challenge, challenges.name , (validation_date - inscription_date) AS difference_date, users.name FROM validations 
+        f"""SELECT validations.id_challenge, challenges.name , (validation_date - inscription_date) AS difference_date, users.name FROM validations 
             JOIN challenges ON challenges.id_challenge = validations.id_challenge
             JOIN users ON users.id_user = validations.id_user
-            WHERE validation_date IS NOT NULL AND id_challenge = {id_challenge}
+            WHERE validations.id_challenge = {id_challenge}
             ORDER BY difference_date ASC;"""
     )
     info = cur.fetchall()
+    print(info, file=sys.stderr)
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
