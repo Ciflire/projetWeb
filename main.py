@@ -283,10 +283,6 @@ def challengeregister():
     return render_template("challengeregiste.html")
 
 
-@app.route("/challenge/user")
-def challengeuser():
-    return render_template("mychallenge.html")
-
 
 @app.route("/user")
 def user():
