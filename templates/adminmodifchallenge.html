@@ -2,7 +2,7 @@
 
 <div id="content">
   <h2>Modification d'une épreuve</h2>
-  <form id="creaepreuve" method="post" action="action="{{ url_for('/challenge/modify') }}">
+  <form id="creaepreuve">
     <br />
     <label for="fname"><h3>Nom de l'épreuve</h3></label>
     <input type="text" id="namechallenge" name="name" value="" />
@@ -14,10 +14,9 @@
       type="submit"
       onclick="confirm('Êtes-vous sûr ?')"
       id="adduser"
-      name="action1"
       value="Appliquer"
     />
-    <input type="submit" id="removeuser" name="action2" value="Annuler" />
+    <input type="button" id="removeuser" value="Annuler" />
   </form>
 </div>
 
