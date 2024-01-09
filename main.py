@@ -205,11 +205,14 @@ def challengeAllOder():
         response = requests.get(api_url)
         if response.status_code == 200:
             n_json = response.json()
-            return render_template("allchallengeorder.html", data=data_json, liste_id=n_json)
+            return render_template(
+                "allchallengeorder.html", data=data_json, liste_id=n_json
+            )
         else:
             return "Erreur lors de la récupération des données de l'API"
     else:
         return "Erreur lors de la récupération des données de l'API"
+
 
 @app.route("/challenge/all/admin")
 def challengealladmin():
@@ -230,27 +233,30 @@ def usersall():
         return "Erreur lors de la récupération des données de l'API"
 
 
-@app.route("/challenge/<id_challenge>") #a faire
+@app.route("/challenge/<id_challenge>")  # a faire
 def challenge(id_challenge):
     # Effectuer la requête API pour récupérer des données au format JSON
-    api_url = "http://127.0.0.1:5000/api/challenge/"+str(id_challenge)
+    api_url = "http://127.0.0.1:5000/api/challenge/" + str(id_challenge)
     response = requests.get(api_url)
 
     # Vérifier si la requête a réussi (statut 200)
     if response.status_code == 200:
         data_json = response.json()
-        api_url = "http://127.0.0.1:5000/api/challenge/name/"+str(id_challenge)
+        api_url = "http://127.0.0.1:5000/api/challenge/name/" + str(
+            id_challenge
+        )
         response = requests.get(api_url)
 
         # Vérifier si la requête a réussi (statut 200)
         if response.status_code == 200:
             name_json = response.json()
-            return render_template("challenge.html", data=data_json , name = name_json)
+            return render_template(
+                "challenge.html", data=data_json, name=name_json
+            )
         else:
             return "Erreur lors de la récupération des données de l'API 2"
     else:
         return "Erreur lors de la récupération des données de l'API 1"
-    
 
 
 @app.route("/challenge/admin")
@@ -277,7 +283,9 @@ def challengeuser():
 def user():
     if current_user.is_authenticated:
         # Effectuer la requête API pour récupérer des données au format JSON
-        api_url = "http://127.0.0.1:5000/api/users/" + str(current_user.user_id)
+        api_url = "http://127.0.0.1:5000/api/users/" + str(
+            current_user.user_id
+        )
         print(api_url)
         response = requests.get(api_url)
 
@@ -319,6 +327,7 @@ def template():
 def createchallenge():
     return render_template("createchallenge.html")
 
+
 @app.route("/api/challenge/idLidt")
 def apiChallengeIdList():
     creation_date = datetime.now().timestamp()
@@ -333,6 +342,7 @@ def apiChallengeIdList():
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
+
 
 @app.route("/api/challenge/all/order")
 def apiChallengeAllOder():
@@ -352,15 +362,19 @@ def apiChallengeAllOder():
     # print(info, file=sys.stderr)
     return jsonify(info)
 
+
 @app.route("/api/challenge/name/<id_challenge>")
 def apiChallengeName(id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(f"""SELECT * FROM challenges WHERE id_challenge = {id_challenge};""")
+    cur.execute(
+        f"""SELECT * FROM challenges WHERE id_challenge = {id_challenge};"""
+    )
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
+
 
 @app.route("/api/challenge/create", methods=["POST"])
 def apichallengecreate():
