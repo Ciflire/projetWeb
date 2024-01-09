@@ -11,12 +11,12 @@
     <h1>LeaderShip</h1>
   </header>
   <body>
-    <form>
+    <form method="post" actions="{{url_for('login') }}">
       <div id="box">
         <label for="fname">Nom d'utilisateur</label><br />
-        <input type="text" id="fname" name="fname" /><br /><br />
+        <input type="text" id="fname" name="username" /><br /><br />
         <label for="lname">Mot de passe</label><br />
-        <input type="password" id="lname" name="lname" /><br /><br />
+        <input type="password" id="lname" name="password" /><br /><br />
         <input id="submit" type="submit" value="Se connecter" />
       </div>
     </form>

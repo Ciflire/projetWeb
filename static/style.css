@@ -13,42 +13,6 @@ a:hover {
   text-decoration: underline;
 }
 
-.cta:hover {
-  background: linear-gradient(#6a619e, #8788ba);
-  text-decoration: none;
-}
-
-.case_navigation {
-  background-color: #fff;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-}
-
-.barre_navigation {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.case_navigation:hover {
-  background-color: pink;
-}
-
-.tableau {
-  background-color: #fff;
-  border: 1px solid black;
-  height: 250px;
-  overflow-y: scroll;
-}
-
-.tous_les_tableaux {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-}
-
 th {
   position: sticky;
   top: 0;
