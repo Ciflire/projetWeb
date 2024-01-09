@@ -1,14 +1,18 @@
 {% extends "template.html" %} {% block body %}
 <div id="content">
   <h2>Création d'une épreuve</h2>
-  <form id="creaepreuve">
+  <form
+    id="createpreuve"
+    method="post"
+    action="{{ url_for('apichallengecreate')}}"
+  >
     <br />
-    <label for="fname"><h3>Nom de l'épreuve</h3></label>
-    <input type="text" id="namechallenge" name="fname" />
-    <label for="fname"><h3>Description</h3></label>
+    <label for="namechallenge"><h3>Nom de l'épreuve</h3></label>
+    <input type="text" id="namechallenge" name="namechallenge" />
+    <label for="desc"><h3>Description</h3></label>
     <textarea id="description"></textarea>
-    <label for="fname"><h3>Date de fin</h3></label>
-    <input type="date" id="date" name="fname" />
+    <label for="date"><h3>Date de fin</h3></label>
+    <input type="date" id="date" name="date" />
     <input
       type="submit"
       onclick="confirm('Êtes-vous sûr ?')"
