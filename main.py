@@ -192,6 +192,25 @@ def challengeAll():
         return "Erreur lors de la récupération des données de l'API"
 
 
+@app.route("/challenge/all/order")
+def challengeAllOder():
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = "http://127.0.0.1:5000/api/challenge/all/order"
+    response = requests.get(api_url)
+
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        api_url = "http://127.0.0.1:5000/api/challenge/idLidt"
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            n_json = response.json()
+            return render_template("allchallengeorder.html", data=data_json, liste_id=n_json)
+        else:
+            return "Erreur lors de la récupération des données de l'API"
+    else:
+        return "Erreur lors de la récupération des données de l'API"
+
 @app.route("/challenge/all/admin")
 def challengealladmin():
     return render_template("allchallengeadmin.html")
@@ -211,9 +230,27 @@ def usersall():
         return "Erreur lors de la récupération des données de l'API"
 
 
-@app.route("/challenge")
-def challenge():
-    return render_template("challenge.html")
+@app.route("/challenge/<id_challenge>") #a faire
+def challenge(id_challenge):
+    # Effectuer la requête API pour récupérer des données au format JSON
+    api_url = "http://127.0.0.1:5000/api/challenge/"+str(id_challenge)
+    response = requests.get(api_url)
+
+    # Vérifier si la requête a réussi (statut 200)
+    if response.status_code == 200:
+        data_json = response.json()
+        api_url = "http://127.0.0.1:5000/api/challenge/name/"+str(id_challenge)
+        response = requests.get(api_url)
+
+        # Vérifier si la requête a réussi (statut 200)
+        if response.status_code == 200:
+            name_json = response.json()
+            return render_template("challenge.html", data=data_json , name = name_json)
+        else:
+            return "Erreur lors de la récupération des données de l'API 2"
+    else:
+        return "Erreur lors de la récupération des données de l'API 1"
+    
 
 
 @app.route("/challenge/admin")
@@ -238,7 +275,20 @@ def challengeuser():
 
 @app.route("/user")
 def user():
-    return render_template("myprofil.html")
+    if current_user.is_authenticated:
+        # Effectuer la requête API pour récupérer des données au format JSON
+        api_url = "http://127.0.0.1:5000/api/users/" + str(current_user.user_id)
+        print(api_url)
+        response = requests.get(api_url)
+
+        # Vérifier si la requête a réussi (statut 200)
+        if response.status_code == 200:
+            data_json = response.json()
+            return render_template("myprofil.html", data=data_json)
+        else:
+            return "Erreur lors de la récupération des données de l'API"
+    else:
+        return render_template("login.html")
 
 
 @app.route("/challenge/delete")
@@ -269,6 +319,48 @@ def template():
 def createchallenge():
     return render_template("createchallenge.html")
 
+@app.route("/api/challenge/idLidt")
+def apiChallengeIdList():
+    creation_date = datetime.now().timestamp()
+    conn = sqlite3.connect(app.config["DATABASE"])
+    cur = conn.cursor()
+    cur.execute(
+        """
+        SELECT id_challenge FROM challenges
+    """
+    )
+    info = cur.fetchall()
+    conn.close()
+    # print(info, file=sys.stderr)
+    return jsonify(info)
+
+@app.route("/api/challenge/all/order")
+def apiChallengeAllOder():
+    creation_date = datetime.now().timestamp()
+    conn = sqlite3.connect(app.config["DATABASE"])
+    cur = conn.cursor()
+    cur.execute(
+        """
+        SELECT id_challenge, name , (validation_date - inscription_date) AS difference_date, users.name FROM validations 
+        JOIN users ON users.id_user = validations.id_user
+        WHERE validation_date IS NOT NULL
+        ORDER BY id_challenge, difference_date ASC;
+    """
+    )
+    info = cur.fetchall()
+    conn.close()
+    # print(info, file=sys.stderr)
+    return jsonify(info)
+
+@app.route("/api/challenge/name/<id_challenge>")
+def apiChallengeName(id_challenge):
+    conn = sqlite3.connect(app.config["DATABASE"])
+    cur = conn.cursor()
+    cur.execute(f"""SELECT * FROM challenges WHERE id_challenge = {id_challenge};""")
+    info = cur.fetchall()
+    conn.close()
+    # print(info, file=sys.stderr)
+    return jsonify(info)
 
 @app.route("/api/challenge/create/<name>/<end_date>")
 def apichallengecreate(name, end_date):
@@ -387,7 +479,7 @@ def apiUserModify(id_user, name, pwd, hash):
 def apiUser(id_user):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(f"""SELECT * FROM users where id_challenge = {id_user};""")
+    cur.execute(f"""SELECT * FROM users where id_user = {id_user};""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
@@ -410,7 +502,11 @@ def apiChallenge(id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
-        f"""SELECT * FROM challenges where id_challenge = {id_challenge};"""
+        f"""SELECT id_challenge, challenges.name , (validation_date - inscription_date) AS difference_date, users.name FROM validations 
+            JOIN challenges ON challenges.id_challenge = validations.id_challenge
+            JOIN users ON users.id_user = validations.id_user
+            WHERE validation_date IS NOT NULL AND id_challenge = {id_challenge}
+            ORDER BY difference_date ASC;"""
     )
     info = cur.fetchall()
     conn.close()
