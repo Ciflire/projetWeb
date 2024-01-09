@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "users" (
         "id_user"       INTEGER NOT NULL UNIQUE,
-        "name"  TEXT NOT NULL,
+        "name"  TEXT NOT NULL UNIQUE,
         "admin" INTEGER NOT NULL,
         "hash"  TEXT NOT NULL,
         "profile_picture"       INTEGER,
