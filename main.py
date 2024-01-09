@@ -56,29 +56,6 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-class User(UserMixin):
-    def __init__(self, username, password):
-        self.id = user_id
-        self.username = username
-        self.password = password
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    db = get_db()
-    user_data = db.execute(
-        "SELECT * FROM user WHERE id = ?", (user_id,)
-    ).fetchone()
-    if user_data:
-        return User(user_data["id"], user_data["username"])
-    return None
-
-
-user = User("admin", "password")
-
-login_manager.user_loader(load_user)
-
-
 def connect_db():
     return sqlite3.connect(app.config["DATABASE"])
 
@@ -104,42 +81,65 @@ def teardown_request(exception):
 def home():
     return render_template("accueil.html")
 
+@app.route("/challenge/create")
+def challengecreate():
+    return render_template("admincreachallenge.html")
 
-# all users
-@app.route("/users")
-def users():
+@app.route("/challenge/delete")
+def challengedelete():
+    return render_template("admindeletechallenge.html")
+
+@app.route("/challenge/modify")
+def challengemodify():
+    return render_template("adminmodifchallenge.html")
+
+@app.route("/challenge/all")
+def challengeall():
+    return render_template("allchallenge.html")
+
+@app.route("/challenge/all/admin")
+def challengealladmin():
+    return render_template("allchallengeadmin.html")
+
+@app.route("/users/all")
+def usersall():
     return render_template("allusers.html")
 
-
-# challenge
 @app.route("/challenge")
 def challenge():
     return render_template("challenge.html")
 
+@app.route("/challenge/admin")
+def challengeadmin():
+    return render_template("challengeadmin.html")
 
-# profile
-@app.route("/profile/<id>")
-def profile(id):
-    return render_template("profile.html")
+@app.route("/challenge/add/user")
+def challengeadduser():
+    return render_template("challengeadminadduser.html")
 
+@app.route("/challenge/register")
+def challengeregister():
+    return render_template("challengeregiste.html")
 
-# user modif profile
-@app.route("/profile/modify/<id>")
-def modifyProfile(id):
-    return render_template("usermodifprofile.html")
+@app.route("/challenge/user")
+def challengeuser():
+    return render_template("mychallenge.html")
 
+@app.route("/user")
+def user():
+    return render_template("myprofil.html")
 
-# all challenge
-@app.route("/challenges")
-def challenges():
-    return render_template("allchallenge")
+@app.route("/challenge/delete")
+def deletechallenge():
+    return render_template("admindeletechallenge.html")
 
+@app.route("/user/modify")
+def usermodify():
+    return render_template("usermodifprofil.html")
 
-# all challenge admin
-@app.route("/challenge")
-def deleteChallenge():
-    return render_template("allchallengeadmin.html")
-
+@app.route("/template")
+def template():
+    return render_template("template.html")
 
 # all challenge admin remove
 
@@ -150,12 +150,8 @@ def deleteChallenge():
 # challenge registre
 
 
-@app.route("/template")
-def template():
-    return render_template("template.html")
 
 
-login_manager.user_loader(load_user)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -169,10 +165,7 @@ def login():
         password = request.form["password"]
 
         # Check if the username and password are valid
-        if user.username == username and user.password == password:
-            # Login the user
-            login_user(user)
-            return redirect("")
+
 
         # Otherwise, show an error message
         return render_template(
@@ -210,18 +203,18 @@ def register():
 #     if current_user.is_authenticated:
 #         return redirect("/profile")
 
-        cursor = g.db.cursor()
-        cursor.execute("SELECT * FROM users WHERE name = ?", (username,))
-        user = cursor.fetchall()
-        if user and (check_password_hash(user[0][3], password)):
-            session["user_id"] = user[0]
-            return render_template("popup.html", message="Connexion reussie")
-        else:
-            render_template(
-                "popup.html",
-                message="""
-                Login unsuccessful. Please check your username and password.""",
-            )
+#        cursor = g.db.cursor()
+#        cursor.execute("SELECT * FROM users WHERE name = ?", (username,))
+#        user = cursor.fetchall()
+#        if user and (check_password_hash(user[0][3], password)):
+#            session["user_id"] = user[0]
+#            return render_template("popup.html", message="Connexion reussie")
+#        else:
+#            render_template(
+#                "popup.html",
+#                message="""
+#                Login unsuccessful. Please check your username and password.""",
+#            ) 
 
 #         # Check if the username and password are valid
 #         if user.username == username and user.password == password:
@@ -282,18 +275,8 @@ def register():
 #     return render_template("connexion.html")
 
 
-@app.route("/createchallenge")
-def createchallenge():
-    return render_template("createchallenge.html")
-
-
-@app.route("/classements")
-def classements():
-    return render_template("tous_les_classements.html")
-
-
 @app.route("/api/challenge/create/<name>/<end_date>")
-def creationchallenge(name, end_date):
+def apichallengecreate(name, end_date):
     creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
@@ -314,7 +297,7 @@ def creationchallenge(name, end_date):
 
 
 @app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
-def updatechallenge(id_challenge, name, end_date):
+def apiChallengeModify(id_challenge, name, end_date):
     creation_date = datetime.now().timestamp()
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
@@ -337,7 +320,7 @@ def updatechallenge(id_challenge, name, end_date):
 
 
 @app.route("/api/challenge/delete/<id_challenge>")
-def deletechallenge(id_challenge):
+def apiChallengeDelete(id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -364,7 +347,7 @@ def deletechallenge(id_challenge):
 
 
 @app.route("/api/users/create/<name>/<admin>/<password>/<hash>")
-def creationuser(name, admin, password, hash):
+def apiUserCreate(name, admin, password, hash):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -384,7 +367,7 @@ def creationuser(name, admin, password, hash):
 
 
 @app.route("/api/users/change/<id_user>/<name>/<pwd>/<hash>")
-def updateusers(id_user, name, pwd, hash):
+def apiUserModify(id_user, name, pwd, hash):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -406,7 +389,7 @@ def updateusers(id_user, name, pwd, hash):
 
 
 @app.route("/api/users/<id_user>")
-def user_json(id_user):
+def apiUser(id_user):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(f"""SELECT * FROM users where id_challenge = {id_user};""")
@@ -417,7 +400,7 @@ def user_json(id_user):
 
 
 @app.route("/api/users/all")
-def all_users():
+def apiUserAll():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute("""SELECT id_user,name FROM users;""")
@@ -428,7 +411,7 @@ def all_users():
 
 
 @app.route("/api/challenge/<id_challenge>")
-def challenge_json(id_challenge):
+def apiChallenge(id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -441,7 +424,7 @@ def challenge_json(id_challenge):
 
 
 @app.route("/api/validations/<id_user>/<id_challenge>")
-def validations_json(id_user, id_challenge):
+def apiValidation(id_user, id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
@@ -453,22 +436,8 @@ def validations_json(id_user, id_challenge):
     return jsonify(info)
 
 
-@app.route("/allusers")
-def index():
-    # Effectuer la requête API pour récupérer des données au format JSON
-    api_url = "http://127.0.0.1:5000/api/users/all"
-    response = requests.get(api_url)
-
-    # Vérifier si la requête a réussi (statut 200)
-    if response.status_code == 200:
-        data_json = response.json()
-        return render_template("allusers.html", data=data_json)
-    else:
-        return "Erreur lors de la récupération des données de l'API"
-
-
 @app.route("/api/users/delete/<id_user>")
-def deleteuser(id_user):
+def apiUserDelete(id_user):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
