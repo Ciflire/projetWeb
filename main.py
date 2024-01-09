@@ -389,7 +389,7 @@ def apichallengecreate():
 
     message = "Les données ont été enregistrées avec succès!"
 
-    return message
+    return render_template("popup.html", message=message)
 
 
 @app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
@@ -527,26 +527,57 @@ def apiChallenge(id_challenge):
 def apiChallengeAll():
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(
-        f"""SELECT id_challenge,name FROM challenges;"""
-    )
+    cur.execute(f"""SELECT id_challenge,name FROM challenges;""")
     info = cur.fetchall()
     conn.close()
     # print(info, file=sys.stderr)
     return jsonify(info)
 
 
-@app.route("/api/validations/<id_user>/<id_challenge>")
+@app.route(
+    "/api/validations/<id_user>/<id_challenge>", methods=["GET", "POST", "PUT"]
+)
 def apiValidation(id_user, id_challenge):
     conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
-    cur.execute(
-        f"""SELECT * FROM validations where (id_user = {id_user}) and (id_challenge = {id_challenge});""",
-    )
-    info = cur.fetchall()
-    conn.close()
-    # print(info, file=sys.stderr)
-    return jsonify(info)
+    if request.method == "GET":
+        cur.execute(
+            f"""SELECT * FROM validations where (id_user = {id_user}) and (id_challenge = {id_challenge});""",
+        )
+        info = cur.fetchall()
+        conn.close()
+        # print(info, file=sys.stderr)
+        return jsonify(info)
+    if request.method == "POST":
+        incriptionDate = datetime.now().timestamp()
+        token = generateToken()
+        cur.execute(
+            """INSERT INTO validations (id_user, id_challenge, inscription_date, token) VALUES (?,?,?,?)""",
+            (id_user, id_challenge, incriptionDate, token),
+        )
+
+        conn.commit()
+        conn.close()
+        return render_template("challengeadminadduser.html")
+    if request.method == "PUT":
+        if not current_user.is_authenticated:
+            return render_template("login.html")
+        answer = request.form["token"]
+        cur.execute(
+            """SELECT * FROM validations WHERE (id_user=?) and (id_challenge=?)""",
+            (id_user, id_challenge),
+        )
+        token = cur.fetchall()[0][4]
+        if token == answer:
+            currentDate = datetime.now().timestamp()
+            cur.execute(
+                """UPDATE validations SET validation_date = ? WHERE id_user=?""",
+                (currentDate, id_user),
+            )
+            conn.commit()
+            conn.close()
+        return redirect(url_for("challenge", id_challenge=id_challenge))
+    return redirect(url_for("home"))
 
 
 @app.route("/api/users/delete/<id_user>")
