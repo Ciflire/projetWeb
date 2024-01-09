@@ -2,14 +2,12 @@
 <!-- id_challenge, name , (validation_date - inscription_date) AS difference_date, users.name -->
 <div id="content">
   <h2>{{name[0][1]}}</h2>
-  <form>
-    <!-- TO DO -->
-    <input
-      type="button"
-      onclick="confirm('Êtes-vous sûr ?')"
-      id="join"
-      value="Rejoindre l'épreuve"
-    />
+  <form
+    method="post"
+    ,
+    action="{{url_for('apiValidation', id_user=current_user.user_id, id_challenge=name[0][0])}}"
+  >
+    <button type="submit">Participer</button>
   </form>
   <table>
     {% if data %} {% for element in data %}
