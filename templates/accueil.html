@@ -1,6 +1,9 @@
 {% extends "template.html" %} {%block body %}
 <div id="content">
-  <h2>Bienvenue !</h2>
+  <h2>
+    Bienvenue ! {% if current_user.is_authenticated %} {{ current_user.name }}!
+    {% endif %}
+  </h2>
   <h3>Voici les dernières épreuves qui ont été ajoutées !</h3>
   <table>
     <tr>
