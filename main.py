@@ -1,37 +1,82 @@
+import secrets
+import sqlite3
+import sys  # noqa: F401
+from datetime import datetime
+
+import requests
 from flask import (
     Flask,
-    render_template,
-    request,
-    jsonify,
-    redirect,
-    url_for,
     Response,
     flash,
+    g,
+    jsonify,
+    redirect,
+    render_template,
+    request,
     session,
+    url_for,
 )
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask import g
-import sqlite3
-from datetime import datetime
-import secrets
-import sys
-import hashlib
-import requests
+
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    logout_user,
+    current_user,
+    login_required,
+)
+from werkzeug.security import check_password_hash, generate_password_hash
+
 
 app = Flask(__name__, static_folder="static")
-app.config["SECRET_KEY"] = "votre_clé_secrète"
-app.config["DATABASE"] = "data/database.sqlite3"
+app.config["SECRET_KEY"] = "1234567890"
+app.config["DATABASE"] = "static/database.db"
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
-DATABASE = "data/database.sqlite3"  # le nom du fichier de votre base sqlite3
+# DB related
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource("schema.sql", mode="r") as f:
+            db.cursor().executescript(f.read())
+        db.commit()
 
 
-def get_db():  # cette fonction permet de créer une connexion à la base
-    # ou de récupérer la connexion existante
-    db = getattr(g, "_database", None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
+def get_db():
+    db = sqlite3.connect(app.config["DATABASE"])
+    db.row_factory = sqlite3.Row
     return db
+
+
+@app.teardown_appcontext
+def close_db(error):
+    if hasattr(g, "sqlite_db"):
+        g.sqlite_db.close()
+
+
+class User(UserMixin):
+    def __init__(self, username, password):
+        self.id = user_id
+        self.username = username
+        self.password = password
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    db = get_db()
+    user_data = db.execute(
+        "SELECT * FROM user WHERE id = ?", (user_id,)
+    ).fetchone()
+    if user_data:
+        return User(user_data["id"], user_data["username"])
+    return None
+
+
+user = User("admin", "password")
+
+login_manager.user_loader(load_user)
 
 
 def connect_db():
@@ -54,19 +99,88 @@ def teardown_request(exception):
         g.db.close()
 
 
+# accueil
 @app.route("/")
 def home():
     return render_template("accueil.html")
 
 
-@app.route("/user")
-def profile():
+# all users
+@app.route("/users")
+def users():
+    return render_template("allusers.html")
+
+
+# challenge
+@app.route("/challenge")
+def challenge():
+    return render_template("challenge.html")
+
+
+# profile
+@app.route("/profile/<id>")
+def profile(id):
     return render_template("profile.html")
+
+
+# user modif profile
+@app.route("/profile/modify/<id>")
+def modifyProfile(id):
+    return render_template("usermodifprofile.html")
+
+
+# all challenge
+@app.route("/challenges")
+def challenges():
+    return render_template("allchallenge")
+
+
+# all challenge admin
+@app.route("/challenge")
+def deleteChallenge():
+    return render_template("allchallengeadmin.html")
+
+
+# all challenge admin remove
+
+# admin Create challenge
+# admin modify challenge
+# challenge admin
+# challenge admin add user
+# challenge registre
 
 
 @app.route("/template")
 def template():
     return render_template("template.html")
+
+
+login_manager.user_loader(load_user)
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if current_user.is_authenticated:
+        return redirect("/profile")
+
+    if request.method == "POST":
+        # Get the username and password from the request
+        username = request.form["username"]
+        password = request.form["password"]
+
+        # Check if the username and password are valid
+        if user.username == username and user.password == password:
+            # Login the user
+            login_user(user)
+            return redirect("")
+
+        # Otherwise, show an error message
+        return render_template(
+            "login.html", error="Invalid username or password."
+        )
+
+    # Render the login form for GET requests
+    return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -107,7 +221,7 @@ def login():
             render_template(
                 "popup.html",
                 message="""
-                "Login unsuccessful. Please check your username and password.""",
+                Login unsuccessful. Please check your username and password.""",
             )
 
     return render_template("connexion.html")
@@ -126,7 +240,7 @@ def classements():
 @app.route("/api/challenge/create/<name>/<end_date>")
 def creationchallenge(name, end_date):
     creation_date = datetime.now().timestamp()
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
@@ -147,7 +261,7 @@ def creationchallenge(name, end_date):
 @app.route("/api/challenge/change/<id_challenge>/<name>/<end_date>")
 def updatechallenge(id_challenge, name, end_date):
     creation_date = datetime.now().timestamp()
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
@@ -169,7 +283,7 @@ def updatechallenge(id_challenge, name, end_date):
 
 @app.route("/api/challenge/delete/<id_challenge>")
 def deletechallenge(id_challenge):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
@@ -196,7 +310,7 @@ def deletechallenge(id_challenge):
 
 @app.route("/api/users/create/<name>/<admin>/<password>/<hash>")
 def creationuser(name, admin, password, hash):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
@@ -216,7 +330,7 @@ def creationuser(name, admin, password, hash):
 
 @app.route("/api/users/change/<id_user>/<name>/<pwd>/<hash>")
 def updateusers(id_user, name, pwd, hash):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
@@ -238,7 +352,7 @@ def updateusers(id_user, name, pwd, hash):
 
 @app.route("/api/users/<id_user>")
 def user_json(id_user):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(f"""SELECT * FROM users where id_challenge = {id_user};""")
     info = cur.fetchall()
@@ -249,7 +363,7 @@ def user_json(id_user):
 
 @app.route("/api/users/all")
 def all_users():
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(f"""SELECT id_user,name FROM users;""")
     info = cur.fetchall()
@@ -260,7 +374,7 @@ def all_users():
 
 @app.route("/api/challenge/<id_challenge>")
 def challenge_json(id_challenge):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         f"""SELECT * FROM challenges where id_challenge = {id_challenge};"""
@@ -273,7 +387,7 @@ def challenge_json(id_challenge):
 
 @app.route("/api/validations/<id_user>/<id_challenge>")
 def validations_json(id_user, id_challenge):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         f"""SELECT * FROM validations where (id_user = {id_user}) and (id_challenge = {id_challenge});""",
@@ -300,7 +414,7 @@ def index():
 
 @app.route("/api/users/delete/<id_user>")
 def deleteuser(id_user):
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(app.config["DATABASE"])
     cur = conn.cursor()
     cur.execute(
         """
