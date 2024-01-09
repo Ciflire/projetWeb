@@ -11,25 +11,17 @@
       value="Rejoindre l'épreuve"
     />
   </form>
-    {% set n = 0 %}
-    <table>
-      {% if ma_liste %}
-      {% for element in data %}
-        <tr>
-                <td>{{ n+1 }}</td>
-                <td>{{ data[n][3] }}</td>
-                <td>{{ data[n][2] }}</td>
-        </tr>
-    
-    {% endfor %} 
+  <table>
+    {% if data %} {% for element in data %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ data[loop.index - 1][3] }}</td>
+      <td>{{ data[loop.index - 1][2] }}</td>
+    </tr>
+
+    {% endfor %}
   </table>
   {% else %}
   <p>La liste est vide.</p>
-  {% endif %}
-  {% endblock %}
-
-
-    
-        
-    
-        
+  {% endif %} {% endblock %}
+</div>
