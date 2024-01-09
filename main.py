@@ -142,7 +142,7 @@ def login():
         login_user(client)
         return redirect(url_for("home"))
     else:
-        return redirect(url_for("profile/1"))
+        return render_template("login.html")
 
 
 @app.route("/logout/")
@@ -162,65 +162,81 @@ def generateToken() -> str:
 def home():
     return render_template("accueil.html")
 
+
 @app.route("/challenge/create")
 def challengecreate():
     return render_template("admincreachallenge.html")
+
 
 @app.route("/challenge/delete")
 def challengedelete():
     return render_template("admindeletechallenge.html")
 
+
 @app.route("/challenge/modify")
 def challengemodify():
     return render_template("adminmodifchallenge.html")
+
 
 @app.route("/challenge/all")
 def challengeall():
     return render_template("allchallenge.html")
 
+
 @app.route("/challenge/all/admin")
 def challengealladmin():
     return render_template("allchallengeadmin.html")
+
 
 @app.route("/users/all")
 def usersall():
     return render_template("allusers.html")
 
+
 @app.route("/challenge")
 def challenge():
     return render_template("challenge.html")
+
 
 @app.route("/challenge/admin")
 def challengeadmin():
     return render_template("challengeadmin.html")
 
+
 @app.route("/challenge/add/user")
 def challengeadduser():
     return render_template("challengeadminadduser.html")
+
 
 @app.route("/challenge/register")
 def challengeregister():
     return render_template("challengeregiste.html")
 
+
 @app.route("/challenge/user")
 def challengeuser():
     return render_template("mychallenge.html")
+
 
 @app.route("/user")
 def user():
     return render_template("myprofil.html")
 
+
 @app.route("/challenge/delete")
 def deletechallenge():
     return render_template("admindeletechallenge.html")
+
 
 @app.route("/user/modify")
 def usermodify():
     return render_template("usermodifprofil.html")
 
+
 @app.route("/template")
 def template():
     return render_template("template.html")
+
 
 # all challenge admin remove
 
@@ -231,55 +247,9 @@ def template():
 # challenge registre
 
 
-
-
 @app.route("/createchallenge")
 def createchallenge():
     return render_template("createchallenge.html")
-
-
-# @app.route("/register", methods=["GET", "POST"])
-# def register():
-#     if request.method == "POST":
-#         username = request.form["username"]
-#         password = request.form["password"]
-
-#         # Utilisez SHA-256 pour hacher le mot de passe
-#         hashed_password = generate_password_hash(password)
-
-#         cursor = g.db.cursor()
-#         cursor.execute(
-#             "INSERT INTO users (name, admin, password, hash) VALUES (?, 1, ?, ?)",
-#             (username, hashed_password, hashed_password),
-#         )
-#         g.db.commit()
-
-#         flash("Your account has been created!", "success")
-#         return redirect(url_for("login"))
-
-#     return render_template("register.html")
-
-
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     if request.method == "POST":
-#         username = request.form["username"]
-#         password = request.form["password"]
-
-#         cursor = g.db.cursor()
-#         cursor.execute("SELECT * FROM users WHERE name = ?", (username,))
-#         user = cursor.fetchall()
-#         if user and (check_password_hash(user[0][3], password)):
-#             session["user_id"] = user[0]
-#             return render_template("popup.html", message="Connexion reussie")
-#         else:
-#             render_template(
-#                 "popup.html",
-#                 message="""
-#                 Login unsuccessful. Please check your username and password.""",
-#             )
-
-#     return render_template("connexion.html")
 
 
 @app.route("/api/challenge/create/<name>/<end_date>")
