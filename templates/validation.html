@@ -1,0 +1,23 @@
+{% extends "template.html" %} {% block body %}
+<div id="content">
+  <h2>Entrer le token</h2>
+  <form
+    id="createpreuve"
+    method="put"
+    action="{{ url_for('apiValidation',id_user=id_user,id_challenge=id_challenge)}}"
+  >
+    <br />
+    <label for="token"><h3>Token</h3></label>
+    <input type="text" id="token" name="token" />
+    <input
+      type="submit"
+      onclick="confirm('Êtes-vous sûr ?')"
+      id="adduser"
+      value="Appliquer"
+    />
+    <!redirection template ajout utilisateur>
+    <input type="button" id="removeuser" value="Annuler" />
+    <!redirection template ajout utilisateur>
+  </form>
+</div>
+{% endblock %}

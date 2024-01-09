@@ -157,6 +157,14 @@ def generateToken() -> str:
     return token
 
 
+@app.route("/validation/<id_challenge>")
+def validation(id_challenge):
+    if current_user.is_authenticated:
+        id_user = current_user.user_id
+        return render_template("validation.html",id_challenge = id_challenge,id_user = id_user)
+    else:
+        return redirect (url_for('login'))
+
 # accueil
 @app.route("/")
 def home():
