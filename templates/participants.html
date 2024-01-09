@@ -1,18 +1,15 @@
-{% extends "template.html"%} {% block body %}
+{% extends "template.html" %} {% block body %}
 <div id="content">
-  <h2>Nom du participant</h2>
-  <h3>Voici les épreuves auxquelles tu participes !</h3>
+  <h3>Voici le classement de tous les participants</h3>
   <table>
     <tr>
-      <th id="colum1">Nom de l'épreuve</th>
-      <th>Nombre de participants</th>
-      <th>Classement</th>
-      <th>Statut</th>
+      <th id="colum1">Participants</th>
+      <th>Épreuves réussies</th>
+      <th>Classement général</th>
       <th></th>
     </tr>
     <tr>
       <td><a href="https://example.com">Peter</a></td>
-      <td>15</td>
       <td>15</td>
       <td>Terminée</td>
       <td><input type="button" id="consult" value="Consulter" /></td>
@@ -21,8 +18,8 @@
     <tr>
       <td>Lois</td>
       <td>Griffin</td>
-      <td>15</td>
       <td>En cours</td>
+      <td><input type="button" id="consult" value="Consulter" /></td>
     </tr>
     <tr>
       <td>Joe</td>

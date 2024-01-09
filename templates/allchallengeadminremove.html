@@ -1,0 +1,57 @@
+{% extends "template.htm"%} {% block body %}
+<div id="content">
+  <h2>Suppression d'épreuves</h2>
+  <h3>Cochez les épreuves à supprimer</h3>
+  <form>
+    <input
+      type="button"
+      onclick="confirm('Êtes-vous sûr ?')"
+      id="adduser"
+      value="Appliquer"
+    />
+    <!redirection template ajout utilisateur>
+    <input type="button" id="removeuser" value="Annuler" />
+    <!redirection template ajout utilisateur>
+    <table>
+      <tr>
+        <th id="colum1">Nom de l'épreuve</th>
+        <th>Nombre de participants</th>
+        <th>Statut</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td><a href="https://example.com">Peter</a></td>
+        <td>15</td>
+        <td>Terminée</td>
+        <td><input type="checkbox" name="value1" value="1" /></td>
+      </tr>
+
+      <tr>
+        <td>Lois</td>
+        <td>Griffin</td>
+        <td>En cours</td>
+        <td><input type="checkbox" name="value1" value="2" /></td>
+      </tr>
+      <tr>
+        <td>Joe</td>
+        <td>Swanson</td>
+        <td>$300</td>
+        <td><input type="checkbox" name="value1" value="1" /></td>
+      </tr>
+      <tr>
+        <td>Cleveland</td>
+        <td>Brown</td>
+        <td>$250</td>
+        <td><input type="checkbox" name="value1" value="3" /></td>
+      </tr>
+      <tr>
+        <td>Cleveland</td>
+        <td>Brown</td>
+        <td>$250</td>
+        <td><input type="checkbox" name="value1" value="1" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+{% endblck %}
