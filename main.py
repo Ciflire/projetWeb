@@ -592,9 +592,9 @@ def apiValidation(id_user, id_challenge):
 
 @app.route("/api/correction/<id_user>/<id_challenge>", methods=["POST"])
 def apiCorrection(id_user, id_challenge):
-    conn = sqlite3.connect(app.config["DATABASE"])
-    cur = conn.cursor()
     if request.method == "POST":
+        conn = sqlite3.connect(app.config["DATABASE"])
+        cur = conn.cursor()
         if not current_user.is_authenticated:
             return render_template("login.html")
         answer = request.form["token"]
@@ -609,8 +609,8 @@ def apiCorrection(id_user, id_challenge):
                 """UPDATE validations SET validation_date = ? WHERE id_user=?""",
                 (currentDate, id_user),
             )
-            conn.commit()
-            conn.close()
+        conn.commit()
+        conn.close()
         return redirect(url_for("challenge", id_challenge=id_challenge))
     return redirect(url_for("home"))
 

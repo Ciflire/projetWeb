@@ -1,22 +1,16 @@
 {% extends "template.html" %} {% block body %} 
-
-    {% set m = 0 %}
-    {% for element in liste_id %}
-    <table>
+    {%set n = 1%}
+    {% for a in range(data|length) %}
         <tr>
-            <!-- id_challenge, name , (validation_date - inscription_date) AS difference_date, users.name -->
-            {% set n = 0 %}
-            {% for _ in range(data|length) %}
-            {% if m != data|length and data[m][0] == element[0] %}
-                <td>{{ n+1 }}</td>
-                <td>{{ data[m][3] }}</td>
-                <td>{{ data[m][2] }}</td>
-                {% set m = m+1 %}
-                {% set n = n+1 %}
-            {% endif %}
-        {% endfor %}
-        </tr>
+        {%if data[a][0] != data[a-1][0]%}
+            {%set n = a-1%}
+            {%endif%}
+        <td>{{ a-n }}</td>
+        <td>{{ data[a][3] }}</td>
+        <td>{{ data[a][2] }}</td>
+    
+    {% endfor %} 
     </table>
-    {% endfor %} {% endblock %}
+    {% endblock %}
    
     
